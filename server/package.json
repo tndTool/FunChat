@@ -1,0 +1,21 @@
+{
+    "name": "funchat",
+    "version": "1.0.0",
+    "description": "* Nguyễn Đức Toàn",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tndTool/FunChat.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/tndTool/FunChat/issues"
+    },
+    "homepage": "https://github.com/tndTool/FunChat#readme"
+}
