@@ -5,7 +5,7 @@ export const userRegister = async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        const checkUser = await User.find({ username });
+        const checkUser = await User.findOne({ username });
 
         if (checkUser)
             return res.status(400).json({
@@ -14,7 +14,7 @@ export const userRegister = async (req, res) => {
 
         const user = new User({ username });
 
-        user.savePassword(password);
+        user.setPassword(password);
 
         await user.save();
 
