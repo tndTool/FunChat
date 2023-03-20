@@ -11,7 +11,7 @@ import SigninPage from './pages/SigninPage';
 import AuthRoute from './components/AuthRoute';
 import ProtectedRoute from './components/ProtectedRoute';
 
-const App = () => {
+function App() {
     const theme = createTheme({
         palette: { mode: 'dark' },
     });
@@ -19,7 +19,6 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-
             <ToastContainer
                 position="bottom-left"
                 autoClose={4000}
@@ -29,7 +28,6 @@ const App = () => {
                 rtl={false}
                 pauseOnHover
             />
-
             <BrowserRouter>
                 <Routes>
                     <Route
@@ -40,7 +38,6 @@ const App = () => {
                             </ProtectedRoute>
                         }
                     />
-
                     <Route
                         path="/signin"
                         element={
@@ -49,7 +46,6 @@ const App = () => {
                             </AuthRoute>
                         }
                     />
-
                     <Route
                         path="/signup"
                         element={
@@ -62,6 +58,6 @@ const App = () => {
             </BrowserRouter>
         </ThemeProvider>
     );
-};
+}
 
 export default App;

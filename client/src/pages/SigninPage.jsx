@@ -18,10 +18,9 @@ const SigninPage = () => {
             username: '',
             password: '',
         },
-
         validationSchema: yup.object({
-            username: yup.string().required('Username is required').min(6).max(20),
-            password: yup.string().required('Password is required').min(6).max(20),
+            username: yup.string().required('Username is required').min(6).max(15),
+            password: yup.string().required('Password is requried').min(6),
         }),
 
         onSubmit: (values) => onSignIn(values),
@@ -31,10 +30,7 @@ const SigninPage = () => {
         if (isRequest) return;
         setIsRequest(true);
 
-        const { response, err } = await userSignIn({
-            username,
-            password,
-        });
+        const { response, err } = await userSignIn({ username, password });
 
         setIsRequest(false);
 
@@ -55,27 +51,24 @@ const SigninPage = () => {
                     name="username"
                     value={form.values.username}
                     onChange={form.handleChange}
-                    error={form.touched.username && form.errors.username != undefined}
+                    error={form.touched.username && form.errors.username !== undefined}
                     helperText={form.touched.username && form.errors.username}
                 />
-
                 <TextField
                     fullWidth
+                    type="password"
                     placeholder="Password"
                     name="password"
-                    type="password"
                     value={form.values.password}
                     onChange={form.handleChange}
-                    error={form.touched.password && form.errors.password != undefined}
+                    error={form.touched.password && form.errors.password !== undefined}
                     helperText={form.touched.password && form.errors.password}
                 />
-
                 <LoadingButton type="submit" size="large" variant="contained" loading={isRequest} color="success">
-                    sign in
+                    signin
                 </LoadingButton>
-
                 <Button component={Link} to="/signup" size="small">
-                    sign up
+                    signup
                 </Button>
             </Stack>
         </Box>
