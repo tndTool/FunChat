@@ -20,15 +20,7 @@ router.post(
         .withMessage('password is required')
         .isLength({ min: 6 })
         .withMessage('password at least 6 characters'),
-    body('confirmPassword')
-        .exists()
-        .withMessage('confirmPassword is required')
-        .isLength({ min: 6 })
-        .withMessage('confirmPassword minimum 6 characters')
-        .custom((value, { req }) => {
-            if (value !== req.body.password) throw new Error('confirmPassword not match');
-            return true;
-        }),
+
     validate,
     userRegister,
 );
