@@ -18,7 +18,7 @@ const SigninPage = () => {
             password: '',
         },
         validationSchema: yup.object({
-            username: yup.string().required('Username is required').min(6).max(15),
+            username: yup.string().required('Username is required').min(6).max(20),
             password: yup.string().required('Password is requried').min(6),
         }),
         onSubmit: (values) => onSignIn(values),
