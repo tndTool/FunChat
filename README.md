@@ -16,7 +16,7 @@ Tech stack
 
 =======
 
-Link website: https://www.taturomovies.online/
+Link website: https://taturofunchat.vercel.app/
 
 ## Usage
 
