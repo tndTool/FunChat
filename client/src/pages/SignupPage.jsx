@@ -24,7 +24,7 @@ const SignupPage = () => {
             confirmPassword: yup
                 .string()
                 .required('Confirm password is requried')
-                .min(8)
+                .min(6)
                 .oneOf([yup.ref('password')], 'Confirm password not match'),
         }),
         onSubmit: (values) => onSignUp(values),
