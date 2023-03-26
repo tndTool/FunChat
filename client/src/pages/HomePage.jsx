@@ -5,7 +5,7 @@ import { chatCompletion } from '../api/chat.api';
 import { toast } from 'react-toastify';
 import TypeWriter from 'typewriter-effect';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Stack, Box, Typography, IconButton, FormControl, OutlinedInput, CircularProgress } from '@mui/material';
 
 const messageType = {
@@ -145,34 +145,40 @@ const HomePage = () => {
                             <Box
                                 sx={{
                                     padding: 2,
-                                    bgcolor: item.type === messageType.answer && '#2f2f2f',
                                     borderRadius: 3,
+                                    backgroundColor: item.type === messageType.answer ? '#2f2f2f' : 'white',
+                                    color: item.type === messageType.answer ? 'white' : 'black',
+                                    whiteSpace: 'pre-line',
+                                    fontFamily: 'inherit',
+                                    fontSize: 'inherit',
+                                    lineHeight: 'inherit',
                                 }}
                             >
-                                {index === messages.length - 1 ? (
-                                    item.type === messageType.answer ? (
-                                        <TypeWriter
-                                            onInit={(writer) => {
-                                                writer
-                                                    .typeString(item.content)
-                                                    .callFunction(() => {
-                                                        document.querySelector('.Typewriter__cursor').style.display =
-                                                            'none';
-
-                                                        setOnRequest(false);
-                                                        setTimeout(() => {
-                                                            inputRef.current.focus();
-                                                        }, 200);
-                                                    })
-                                                    .changeDelay(50)
-                                                    .start();
-                                            }}
-                                        />
-                                    ) : (
-                                        item.content
-                                    )
+                                {index === messages.length - 1 && item.type === messageType.answer ? (
+                                    <TypeWriter
+                                        options={{
+                                            autoStart: true,
+                                            loop: false,
+                                            delay: 50,
+                                            pauseFor: 500,
+                                        }}
+                                        onInit={(writer) => {
+                                            writer
+                                                .typeString(item.content.trim())
+                                                .callFunction(() => {
+                                                    document.querySelector('.Typewriter__cursor').style.display =
+                                                        'none';
+                                                    setOnRequest(false);
+                                                    setTimeout(() => {
+                                                        inputRef.current.focus();
+                                                    }, 200);
+                                                })
+                                                .changeDelay(50)
+                                                .start();
+                                        }}
+                                    />
                                 ) : (
-                                    item.content
+                                    item.content.trim()
                                 )}
                             </Box>
                         </Box>
@@ -189,21 +195,22 @@ const HomePage = () => {
                 zIndex={3}
             >
                 <Box padding={2} width="100%" maxWidth="md">
-                    <FormControl fullWidth variant="outlined">
+                    <FormControl fullWidth variant="outlined" sx={{ marginBottom: 2 }}>
                         <OutlinedInput
                             inputRef={inputRef}
-                            sx={{
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                            }}
-                            endAdornment={onRequest ? <CircularProgress size="1.5rem" /> : <SendOutlinedIcon />}
-                            autoFocus
-                            disabled={onRequest}
-                            onKeyUp={onEnterPress}
                             value={question}
                             onChange={(e) => setQuestion(e.target.value)}
-                            placeholder="Ask something..."
+                            onKeyDown={onEnterPress}
+                            endAdornment={
+                                <IconButton
+                                    edge="end"
+                                    color="primary"
+                                    onClick={getAnswer}
+                                    disabled={onRequest || question.trim() === ''}
+                                >
+                                    {onRequest ? <CircularProgress size={24} /> : <SendOutlinedIcon />}
+                                </IconButton>
+                            }
                         />
                     </FormControl>
                 </Box>
