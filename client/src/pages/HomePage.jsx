@@ -146,12 +146,13 @@ const HomePage = () => {
                                 sx={{
                                     padding: 2,
                                     borderRadius: 3,
-                                    backgroundColor: item.type === messageType.answer ? '#2f2f2f' : 'white',
-                                    color: item.type === messageType.answer ? 'white' : 'black',
+                                    backgroundColor: item.type === messageType.answer ? '#444655' : '#333',
+                                    color: item.type === messageType.answer ? 'white' : 'white',
                                     whiteSpace: 'pre-line',
                                     fontFamily: 'inherit',
                                     fontSize: 'inherit',
                                     lineHeight: 'inherit',
+                                    textAlign: 'justify',
                                 }}
                             >
                                 {index === messages.length - 1 && item.type === messageType.answer ? (
