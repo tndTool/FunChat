@@ -1,7 +1,7 @@
 import axios from 'axios';
 import queryString from 'query-string';
 
-const baseURL = 'https://funchat-backend.vercel.app/api/v1/';
+const baseURL = 'https://funchat-backend-gmjs5y839-tndtool.vercel.app/api/v1/';
 
 const axiosClient = axios.create({
     baseURL,
