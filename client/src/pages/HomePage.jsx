@@ -5,12 +5,19 @@ import { chatCompletion } from '../api/chat.api';
 import { toast } from 'react-toastify';
 import TypeWriter from 'typewriter-effect';
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useLayoutEffect } from 'react';
 import { Stack, Box, Typography, IconButton, FormControl, OutlinedInput, CircularProgress } from '@mui/material';
 
 const messageType = {
     answer: 'answer',
     question: 'question',
+};
+
+const scrollToBottom = (element) => {
+    element.scroll({
+        top: element.scrollHeight,
+        behavior: 'smooth',
+    });
 };
 
 const HomePage = () => {
@@ -66,16 +73,26 @@ const HomePage = () => {
         navigate('/signin');
     };
 
-    useEffect(() => {
-        setTimeout(() => {
-            chatWrapperRef.current.addEventListener('DOMNodeInserted', (e) => {
-                e.currentTarget.scroll({
-                    top: e.currentTarget.scrollHeight,
-                    behavior: 'smooth',
-                });
-            });
-        }, 200);
+    const handleNodeInserted = useCallback((e) => {
+        e.currentTarget.scroll({
+            top: e.currentTarget.scrollHeight,
+            behavior: 'smooth',
+        });
     }, []);
+
+    useLayoutEffect(() => {
+        scrollToBottom(chatWrapperRef.current);
+    }, []);
+
+    useEffect(() => {
+        const chatWrapper = chatWrapperRef.current;
+
+        chatWrapper.addEventListener('DOMNodeInserted', handleNodeInserted);
+
+        return () => {
+            chatWrapper.removeEventListener('DOMNodeInserted', handleNodeInserted);
+        };
+    }, [chatWrapperRef, handleNodeInserted]);
 
     return (
         <Stack alignItems="center" justifyContent="space-between" sx={{ height: '100%' }}>
@@ -146,7 +163,7 @@ const HomePage = () => {
                                 sx={{
                                     padding: 2,
                                     borderRadius: 3,
-                                    backgroundColor: item.type === messageType.answer ? '#444655' : '#333',
+                                    backgroundColor: item.type === messageType.answer ? '#444655' : '#383642',
                                     color: item.type === messageType.answer ? 'white' : 'white',
                                     whiteSpace: 'pre-line',
                                     fontFamily: 'inherit',
