@@ -13,23 +13,16 @@ export const chatCompletion = async (req, res) => {
         }
 
         const response = await openai.chat.completions.create({
+            messages: [{ role: 'user', content: prompt }],
             model: 'gpt-3.5-turbo',
-            messages: [
-                {
-                    role: 'system',
-                    content: 'You are a helpful assistant.',
-                },
-                {
-                    role: 'user',
-                    content: prompt,
-                },
-            ],
+            temperature: 0.7,
+            max_tokens: 1500,
         });
 
         res.header('Access-Control-Allow-Origin', '*');
         res.json({ text: response.data.choices[0].message.content.trim() });
     } catch (err) {
         console.error('Error creating completion:', err);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'ChatGPT API key has expired' });
     }
 };
